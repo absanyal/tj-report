@@ -1,0 +1,58 @@
+\documentclass[]{report}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{physics}
+\usepackage{color}
+\usepackage{subcaption}
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[hidelinks]{hyperref}
+
+\newcommand{\up}{\fbox{$\uparrow\phantom{\downarrow}$}}%
+\newcommand{\dwn}{\fbox{$\phantom{\uparrow}\downarrow$}}%
+\newcommand{\updwn}{\fbox{$\mathord\uparrow\downarrow$}}%
+\newcommand{\emp}{\fbox{$\phantom{\downarrow}\phantom{\downarrow}$}}%
+\newcommand{\electron}[2]{{%
+		\setlength\tabcolsep{0pt}% remove extra horizontal space from tabular
+		      %\setlength\fboxrule{0.2pt}% uncomment for original line width
+		\begin{tabular}{c}
+			\fboxsep=0pt\fbox{\fboxsep=3pt#2}\\[2pt]
+			#1
+		\end{tabular}%
+}}
+
+%\geometry{top = 2.5cm, bottom = 2.5cm, left = 1.5cm, right = 1.5cm}
+
+\setlength{\parindent}{0mm}
+
+% Title Page
+\title{A Study of the t-J Model\vspace{-5mm}}
+\author{Amit Bikram Sanyal}
+\date{Submitted on \today}
+
+\let\cleardoublepage=\clearpage
+
+\begin{document}
+\begin{minipage}{\linewidth}
+\maketitle
+\end{minipage}
+\vfill
+\begin{center}
+	\includegraphics[width=0.4\linewidth]{images/niser-logo}
+\end{center}
+
+
+\newpage
+\tableofcontents
+\thispagestyle{empty}
+
+\begin{abstract}
+\lipsum[1]
+\end{abstract}
+
+\chapter{sdsd}
+\up\updwn\,$ \longrightarrow $
+
+\end{document}
