@@ -10,6 +10,7 @@
 \usepackage{amssymb}
 \usepackage[hidelinks]{hyperref}
 \usepackage{parskip}
+\usepackage{mathtools}
 \usepackage{tikz}
 \usetikzlibrary{shapes.callouts, shapes.geometric, arrows}
 \tikzset{
@@ -147,9 +148,12 @@ In order to treat such systems, we will develop an effective Hamiltonian which f
 We will first separate the Hamiltonian into three parts: parts which do not change the energy of the system by preserving the number of double occupancies, and parts which change the energy by altering the number of double occupancies. In order to filter them, we need to first segregate our basis with respect to the hopping events.
 
 Let us first define a set of local projection operators of the form $ \hat{P}_{i a} = \op{a}_{i} $ which returns an eigenvalue $ 1 $ when the site $ i $ has the occupation $ \ket{a}_i $ as shown in section \ref{sec:spectrum}, otherwise returns 0. Explicitly, the four possible operators are
-\begin{align}
+\begin{align}\label{eqn:projectors}
+	\nonumber
 	\hat{P}_{j 0} &= \op{0}_j = (1 - \hat{n}_{i, \uparrow})(1 - \hat{n}_{i, \downarrow})\\
+	\nonumber
 	\hat{P}_{j \uparrow} &= \op{\uparrow}_j = \hat{n}_{i, \uparrow} (1 - \hat{n}_{i, \downarrow})\\
+	\nonumber
 	\hat{P}_{j \downarrow} &= \op{\downarrow}_j = \hat{n}_{i, \downarrow} (1 - \hat{n}_{i, \uparrow})\\
 	\hat{P}_{j d} &= \op{d}_j = \hat{n}_{i, \uparrow} \hat{n}_{i, \downarrow}
 \end{align}
@@ -164,30 +168,159 @@ This is called a projected hopping, in the sense that this is only a projection 
 
 We see that the above hopping increases the number of doubly occupied sites by one. Collecting all such terms together, we can write the part of the Hamiltonian which increases the number of double occupations in the system by one:
 
-\begin{align}
+\begin{align}\label{eqn:Ht+}
 H^{+}_{t} = -t \sum_{\langle i, j \rangle} \sum_{\sigma} \left[ \hat{n}_{i, -\sigma} c^{\dagger}_{i, \sigma} c_{j, \sigma} (1 - \hat{n}_{j, -\sigma}) + h.c.\right]
 \end{align}
 
 \newpage
 Similarly, the Hamiltonian for processes which decrease the number of double occupations is given as
 
-\begin{align}
+\begin{align}\label{eqn:Ht-}
 	H^{-}_{t} = -t \sum_{\langle i, j \rangle} \sum_{\sigma} \left[ (1 - \hat{n}_{i, -\sigma}) c^{\dagger}_{i, \sigma} c_{j, \sigma} \hat{n}_{j, -\sigma} + h.c.\right]
 \end{align}
 
 There can also be processes which preserve the number of doubly-occupied states, where we check whether both the initial and final states are doubly- \textbf{or} singly-occupied. The Hamiltonian for such processes can be shown to be
 
-\begin{align}
+\begin{align}\label{eqn:Ht0}
 	H^{0}_{t} = -t \sum_{\langle i, j \rangle} \sum_{\sigma} \left[ (1 - \hat{n}_{i, -\sigma}) c^{\dagger}_{i, \sigma} c_{j, \sigma} (1 - \hat{n}_{j, -\sigma}) + \hat{n}_{i, -\sigma} c^{\dagger}_{i, \sigma} c_{j, \sigma} \hat{n}_{j, -\sigma} + h.c.\right]
 \end{align}
 
 Combining these three, we can write the band Hamiltonian as
 
-\begin{align}
+\begin{align}\label{eqn:hband}
 	H_{\mathrm{band}} = H^{+}_{t} + H^{-}_{t} + H^{0}_{t}
 \end{align}
 
 The action of $ H^{\pm}_{t} $ can change the energy of the system and thus, transfers electrons from one sub-band to another. On the other hand, $ H^{0}_{t} $ preserves the energy of a state under its action and thus, restricts an electron to its band. As a result, overall, $ H_{\mathring{band}} $, responsible for the hopping of electrons between sites, leads to a mixing of states between two bands. Also, this results in all hopping not being equally probable, depending on the local environment of the electron. This gives a many-body nature to the kinetic energy part of the Hamiltonian.
+
+\chapter{Schrieffer-Wolff transformations and Hubbard operators}
+\section{Schrieffer-Wolff transformations}
+Equation \eqref{eqn:hband} shows that $ H^{\pm}_{t} $ mixes states from different bands. In order to avoid that, we can form suitable linear combinations of the basis states. We can introduce a canonical transformation called the Schrieffer-Wolff transformations. The full Hamiltonian is given as
+
+\begin{align}
+H = H_{\mathrm{band}} + H_U
+\end{align}
+
+Then, the transformed effective Hamiltonian is
+\begin{align}
+\nonumber
+H_{\mathrm{eff}} &= \exp(\I S) H \exp(-\I S)\\
+\nonumber
+&= H \I \comm{S}{H} + \frac{\I^2}{2} \comm{S}{\comm{S}{H}} + \dots\\
+&= H_U + H_{\mathrm{band}} + \I \comm{S}{H_U} + \I \comm{S}{H_{\mathring{band}}} + \frac{\I^2}{2} \comm{S}{\comm{S}{H}} + \dots
+\end{align}
+
+where $ S $ is a suitably chosen generator for the transformation such that $ H_{\mathring{eff}} $ no longer connects the different bands.
+
+In order to guess the form of $ S $, we can try to commute one part of $ H^{+}_{t} $ with $ H_U $.
+
+\begin{align}
+\nonumber
+&\comm{\hat{n}_{i, \downarrow} c^{\dagger}_{i,\uparrow} c_{j, \uparrow} (1 - \hat{n}_{j, \downarrow})}{ \hat{n}_{i, \uparrow} \hat{n}_{i, \downarrow} }\\
+\nonumber
+=&\,
+\hat{n}_{i, \downarrow} c^{\dagger}_{i,\uparrow} c_{j, \uparrow} (1 - \hat{n}_{j, \downarrow}) \hat{n}_{i, \uparrow} \hat{n}_{i, \downarrow}
+-
+\hat{n}_{i, \uparrow} \hat{n}_{i, \downarrow} \hat{n}_{i, \downarrow} c^{\dagger}_{i,\uparrow} c_{j, \uparrow} (1 - \hat{n}_{j, \downarrow})\\
+\nonumber
+=&\,
+\hat{n}_{i, \downarrow}\hat{n}_{i, \downarrow} c^{\dagger}_{i,\uparrow}\hat{n}_{i, \uparrow} c_{j, \uparrow} (1 - \hat{n}_{j, \downarrow})  
+-
+\hat{n}_{i, \uparrow} \hat{n}_{i, \downarrow} \hat{n}_{i, \downarrow} c^{\dagger}_{i,\uparrow} c_{j, \uparrow} (1 - \hat{n}_{j, \downarrow})\\
+\nonumber
+=&\,
+\hat{n}_{i, \downarrow} c^{\dagger}_{i, \downarrow} c_{i, \downarrow} c^{\dagger}_{i, \uparrow} c^{\dagger}_{i, \uparrow} c_{i, \uparrow} c_{j, \uparrow} (1 - n_{j, \downarrow})
+-
+\hat{n}_{i, \uparrow} \hat{n}_{i, \downarrow} \hat{n}_{i, \downarrow} c^{\dagger}_{i,\uparrow} c_{j, \uparrow} (1 - \hat{n}_{j, \downarrow})\\
+\nonumber
+=&\,
+-n_{i, \downarrow} c^{\dagger}_{i, \uparrow} c_{j, \uparrow} (1 - n_{j, \downarrow})
++
+\hat{n}_{i, \uparrow} \hat{n}_{i, \downarrow} \hat{n}_{i, \downarrow} c^{\dagger}_{i,\uparrow} c_{j, \uparrow} (1 - \hat{n}_{j, \downarrow})
+-
+\hat{n}_{i, \uparrow} \hat{n}_{i, \downarrow} \hat{n}_{i, \downarrow} c^{\dagger}_{i,\uparrow} c_{j, \uparrow} (1 - \hat{n}_{j, \downarrow})\\
+=&\,
+-n_{i, \downarrow} c^{\dagger}_{i, \uparrow} c_{j, \uparrow} (1 - n_{j, \downarrow})
+\end{align}
+
+From this, we can conclude that
+\begin{align}
+\comm{H^{\pm}_{t}}{H_U} = \mp U H^{\pm}_{t}
+\end{align}
+
+Therefore, the form of the transformation can now be guessed as
+\begin{align}
+S = - \frac{\I}{U} \left( H^{+}_{t} - H^{-}_{t} \right)
+\end{align}
+
+Then,
+\begin{align}
+\nonumber
+H_{\mathring{eff}} =& H_U + H_{\mathrm{band}} - \left( H^{+}_{t} - H^{-}_{t} \right) + \frac{2}{U} \comm{H^{+}_{t}}{H^{-}_{t}} - \frac{\I}{2} \comm{S}{\comm{H^{+}_{t}}{H^{-}_{t}}} + \order{\frac{t^3}{U}}\\
+\nonumber
+=& H_U + H^{0}_{t} + \frac{2}{U} \comm{H^{+}_{t}}{H^{-}_{t}} - \frac{1}{U} \comm{H^{+}_{t}}{H^{-}_{t}} + \order{\frac{t^3}{U}}\\
+=& H_U + H^{0}_{t} + \frac{1}{U} \comm{H^{+}_{t}}{H^{-}_{t}} + \order{\frac{t^3}{U}}
+\end{align}
+
+The commutator $ \comm{H^{+}_{t}}{H^{-}_{t}} $ can now be calculated by introducing Hubbard operators.
+
+\section{Hubbard Operators}
+A Hubbard operator takes a site from occupation state $ \ket{a}_i $ to $ \ket{b}_i $ and is of the form
+\begin{align}
+X^{b \leftarrow a}_{j} = \op{b}{a}_i
+\end{align}
+
+The definition readily admits the property that
+\begin{align}
+\left( X^{b \leftarrow a}_{j}\right) ^{\dagger} = X^{a \leftarrow b}_{j}
+\end{align}
+
+Using the same logic as the projection operators, the Hubbard operators can be expressed in terms of the creation, annihilation and number operators as
+\begin{align}
+X^{\sigma \leftarrow 0}_{j} &= c^{\dagger}_{j, \sigma} (1 - \hat{n}_{j, -\sigma})\\
+X^{0 \leftarrow \sigma}_{j} &= c_{j, \sigma} (1 - \hat{n}_{j, -\sigma})\\
+X^{d \leftarrow \sigma}_{j} &= \eta(\sigma) c^{\dagger}_{j, \sigma} \hat{n}_{j, \sigma} \\
+X^{\sigma \leftarrow d}_{j} &= \eta(\sigma) c_{j, \sigma} \hat{n}_{j, \sigma} \\
+\end{align}
+
+where
+\begin{align}
+\eta(\sigma) = \left.
+\begin{cases}
++1 & \text{for} \sigma = \uparrow\\
+-1 & \text{for} \sigma = \downarrow\\
+\end{cases}
+\right\}
+\end{align}
+
+The $ \eta(\sigma) $ is required to maintain the convention of $ \ket{d}_i $.
+
+Using this, the product of two Hubbard operators can be defined as
+\begin{align}
+X^{c \rightarrow f}_{j} X^{b \rightarrow a}_{j} = \delta_{bf} X^{c \leftarrow a}_{j}
+\end{align}
+
+The commutator is given as
+
+\begin{align}
+\comm{X^{b \leftarrow a}_{i}}{X^{d \leftarrow c}_{j}} = \delta_{ij} \left( \delta_{ab} X^{b \leftarrow c}_{j} - \delta_{bc} X^{d \leftarrow a}_{j} \right)
+\end{align}
+
+Also, we can get the relation
+
+\begin{align}
+c^{\dagger}_{j, \sigma} = X^{\sigma \leftarrow 0}_j + \eta(\sigma) X^{d \leftarrow -\sigma}_{j}
+\end{align}
+
+Using all in the above properties, from equations \eqref{eqn:Ht+}, \eqref{eqn:Ht-} and \eqref{eqn:Ht0}, we get
+\begin{align}
+H^{+}_{t} &= -t \sum_{\langle i, j \rangle} \sum_{\sigma} \eta(\sigma) \left[ X^{d \leftarrow -\sigma} X^{0 \leftarrow \sigma}_j + h.c. \right]\\
+H^{-}_{t} &= -t \sum_{\langle i, j \rangle} \sum_{\sigma} \eta(\sigma) \left[ X^{\sigma \leftarrow 0} X^{-\sigma \leftarrow d}_j + h.c. \right]\\
+H^{0}_{t} &= -t \sum_{\langle i, j \rangle} \sum_{\sigma} \left[ X^{\sigma \leftarrow 0}_{i} X^{0 \leftarrow \sigma}_{j} + h.c. \right]
+\end{align}
+
+
+
 
 \end{document}
 
