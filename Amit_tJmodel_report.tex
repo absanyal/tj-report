@@ -193,7 +193,7 @@ Combining these three, we can write the band Hamiltonian as
 	H_{\mathrm{band}} = H^{+}_{t} + H^{-}_{t} + H^{0}_{t}
 \end{align}
 
-The action of $ H^{\pm}_{t} $ can change the energy of the system and thus, transfers electrons from one sub-band to another. On the other hand, $ H^{0}_{t} $ preserves the energy of a state under its action and thus, restricts an electron to its band. As a result, overall, $ H_{\mathring{band}} $, responsible for the hopping of electrons between sites, leads to a mixing of states between two bands. Also, this results in all hopping not being equally probable, depending on the local environment of the electron. This gives a many-body nature to the kinetic energy part of the Hamiltonian.
+The action of $ H^{\pm}_{t} $ can change the energy of the system and thus, transfers electrons from one sub-band to another. On the other hand, $ H^{0}_{t} $ preserves the energy of a state under its action and thus, restricts an electron to its band. As a result, overall, $ H_{\mathrm{band}} $, responsible for the hopping of electrons between sites, leads to a mixing of states between two bands. Also, this results in all hopping not being equally probable, depending on the local environment of the electron. This gives a many-body nature to the kinetic energy part of the Hamiltonian.
 
 \chapter{Schrieffer-Wolff transformations and Hubbard operators}
 \section{Schrieffer-Wolff transformations}
@@ -208,10 +208,10 @@ Then, the transformed effective Hamiltonian is
 H_{\mathrm{eff}} &= \exp(\I S) H \exp(-\I S)\\
 \nonumber
 &= H \I \comm{S}{H} + \frac{\I^2}{2} \comm{S}{\comm{S}{H}} + \dots\\
-&= H_U + H_{\mathrm{band}} + \I \comm{S}{H_U} + \I \comm{S}{H_{\mathring{band}}} + \frac{\I^2}{2} \comm{S}{\comm{S}{H}} + \dots
+&= H_U + H_{\mathrm{band}} + \I \comm{S}{H_U} + \I \comm{S}{H_{\mathrm{band}}} + \frac{\I^2}{2} \comm{S}{\comm{S}{H_{\mathrm{band}}  }} + \dots
 \end{align}
 
-where $ S $ is a suitably chosen generator for the transformation such that $ H_{\mathring{eff}} $ no longer connects the different bands.
+where $ S $ is a suitably chosen generator for the transformation such that $ H_{\mathrm{eff}} $ no longer connects the different bands.
 
 In order to guess the form of $ S $, we can try to commute one part of $ H^{+}_{t} $ with $ H_U $.
 \begin{align}
