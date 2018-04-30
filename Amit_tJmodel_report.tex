@@ -13,6 +13,7 @@
 \usepackage{mathtools}
 \usepackage{tikz}
 \usepackage{bm}
+\usepackage{cite}
 \usetikzlibrary{shapes.callouts, shapes.geometric, arrows}
 \tikzset{
 	level/.style = {
@@ -81,7 +82,7 @@
 \thispagestyle{empty}
 
 \begin{abstract}
-	\lipsum[1]
+This report discusses the t-J model, which is the Hubbard model with a strong electron-electron interaction. We have started with the spectrum of the Hubbard model and shown how band mixing occurs. Next, we perform the Schrieffer-Wolff transformation on the bands with the Hubbard operators to separate them up to first order. The t-J model Hamiltonian has been derived by casting out high energy states and the Gutzwiller approximation has been discussed in brief. Finally, we have shown a site density calculation of the Hubbard model using the t-J model to prove that the site occupation depends on spin-correlations.
 \end{abstract}
 
 \chapter{The Hubbard model with strong interactions}
@@ -90,7 +91,7 @@ The Hubbard model is one of the simplest many-body models. The one-dimensional m
 
 The one-dimensional Hubbard Hamiltonian with nearest-neighbour hopping is given as:
 \begin{align}
-	\hat{H} = -t \sum_{\langle i, j \rangle } \sum_{\sigma} \left( c^{\dagger}_{i, \sigma} c^{}_{j, \sigma} + h.c. \right) + U \sum_{i} \hat{n_{i, \uparrow}} \hat{n_{i, \downarrow}}
+	\hat{H} = -t \sum_{\langle i, j \rangle } \sum_{\sigma} \left( c^{\dagger}_{i, \sigma} c^{}_{j, \sigma} + h.c. \right) + U \sum_{i} \hat{n}_{i, \uparrow} \hat{n}_{i, \downarrow}
 \end{align}
 
 where $ t $ denotes the hopping constant and $ U $ is the interaction energy cost when two fermions of opposite spins occupy the same site. The Hubbard model is a tight-binding model, in the sense that particles are localized on each site by Wannier functions and can only jump from site to site, without occupying any intermediate position.
@@ -145,7 +146,7 @@ When both hopping and interactions are present in the system, the spectrum split
 	\caption{Degenerate bands split into two in presence of electron-electron interaction, and each band further broadens when electrons are allowed to hop.}\label{fig:splitting}
 \end{figure}
 
-It is to be noted here that there is a competition between $ t $ and $ U $. While $ U $ tries to separate the high and low energy states, causing the system to acquire insulator-like nature $ T $ tries to bring them closer, making the system more metallic. At a critical value of $ U_{cr} \approx zt $, the bands start splitting. This is called the Mott-Hubbard transition. The large $ U $ regime causes the formation of distinct Hubbard sub-bands at half-filling and is well within the insulating phase. In this phase, the motion of the electrons now become correlated as electrons try to avoid double occupancy.
+It is to be noted here that there is a competition between $ t $ and $ U $. While $ U $ tries to separate the high and low energy states, causing the system to acquire insulator-like nature $ T $ tries to bring them closer, making the system more metallic. At a critical value of $ U_{cr} \sim zt $, the bands start splitting. This is called the Mott-Hubbard transition. The large $ U $ regime causes the formation of distinct Hubbard sub-bands at half-filling and is well within the insulating phase. In this phase, the motion of the electrons now become correlated as electrons try to avoid double occupancy.
 
 In order to treat such systems, we will develop an effective Hamiltonian which filters out the high energy states, leaving us only with the states lying in the lowest Hubbard sub-band.
 
@@ -155,12 +156,12 @@ We will first separate the Hamiltonian into three parts: parts which do not chan
 Let us first define a set of local projection operators of the form $ \hat{P}_{i a} = \op{a}_{i} $ which returns an eigenvalue $ 1 $ when the site $ i $ has the occupation $ \ket{a}_i $ as shown in section \ref{sec:spectrum}, otherwise returns 0. Explicitly, the four possible operators are
 \begin{align}\label{eqn:projectors}
 	\nonumber
-	\hat{P}_{j 0} &= \op{0}_j = (1 - \hat{n}_{i, \uparrow})(1 - \hat{n}_{i, \downarrow})\\
+	\hat{P}_{i 0} &= \op{0}_i = (1 - \hat{n}_{i, \uparrow})(1 - \hat{n}_{i, \downarrow})\\
 	\nonumber
-	\hat{P}_{j \uparrow} &= \op{\uparrow}_j = \hat{n}_{i, \uparrow} (1 - \hat{n}_{i, \downarrow})\\
+	\hat{P}_{i \uparrow} &= \op{\uparrow}_i = \hat{n}_{i, \uparrow} (1 - \hat{n}_{i, \downarrow})\\
 	\nonumber
-	\hat{P}_{j \downarrow} &= \op{\downarrow}_j = \hat{n}_{i, \downarrow} (1 - \hat{n}_{i, \uparrow})\\
-	\hat{P}_{j d} &= \op{d}_j = \hat{n}_{i, \uparrow} \hat{n}_{i, \downarrow}
+	\hat{P}_{i \downarrow} &= \op{\downarrow}_i = \hat{n}_{i, \downarrow} (1 - \hat{n}_{i, \uparrow})\\
+	\hat{P}_{i d} &= \op{d}_i = \hat{n}_{i, \uparrow} \hat{n}_{i, \downarrow}
 \end{align}
 These operators allow us to check whether a state has a given configuration or not.
 
@@ -267,7 +268,7 @@ The commutator $ \comm{H^{+}_{t}}{H^{-}_{t}} $ can now be calculated by introduc
 \section{Hubbard Operators}
 A Hubbard operator takes a site from occupation state $ \ket{a}_i $ to $ \ket{b}_i $ and is of the form
 \begin{align}
-X^{b \leftarrow a}_{j} = \op{b}{a}_i
+X^{b \leftarrow a}_{j} = \op{b}{a}_j
 \end{align}
 
 The definition readily admits the property that
@@ -287,8 +288,8 @@ where
 \begin{align}
 \eta(\sigma) = \left.
 \begin{cases}
-+1 & \text{for} \sigma = \uparrow\\
--1 & \text{for} \sigma = \downarrow\\
++1 & \text{for\,} \sigma = \uparrow\\
+-1 & \text{for\,} \sigma = \downarrow\\
 \end{cases}
 \right\}
 \end{align}
@@ -316,7 +317,7 @@ Using all in the above properties, from equations \eqref{eqn:Ht+}, \eqref{eqn:Ht
 H^{+}_{t} &= -t \sum_{\langle i, j \rangle} \sum_{\sigma} \eta(\sigma) \left[ X^{d \leftarrow -\sigma} X^{0 \leftarrow \sigma}_j + h.c. \right]\\
 \label{eqn:Ht-hubbard}
 H^{-}_{t} &= -t \sum_{\langle i, j \rangle} \sum_{\sigma} \eta(\sigma) \left[ X^{\sigma \leftarrow 0} X^{-\sigma \leftarrow d}_j + h.c. \right]\\
-H^{0}_{t} &= -t \sum_{\langle i, j \rangle} \sum_{\sigma} \left[ X^{\sigma \leftarrow 0}_{i} X^{0 \leftarrow \sigma}_{j} + h.c. \right]
+H^{0}_{t} &= -t \sum_{\langle i, j \rangle} \sum_{\sigma} \left[ X^{\sigma \leftarrow 0}_{i} X^{0 \leftarrow \sigma}_{j} + X^{-\sigma \leftarrow d}_{i} X^{-\sigma \leftarrow d}_{j} + h.c. \right]
 \end{align}
 
 \chapter{The t-J model}
@@ -334,7 +335,7 @@ For evaluating $ \comm{H^{+}_{t}}{H^{-}_{t}} $, we neglect the term $ H^{+}_{t} 
 \nonumber
 \comm{H^{+}_{t}}{H^{-}_{t}} =&  -H^{-}_{t} H^{+}_{t}\\
 \nonumber
-=& -t^2 \sum_{\sigma} \sum_{\sigma'} \eta(\sigma) \eta(\sigma') X^{\sigma' \leftarrow 0}_j X^{-\sigma' \leftarrow d}_i X^{d \rightarrow-\sigma'}_i X^{0 \rightarrow \sigma}_j\\
+=& -t^2 \sum_{\sigma} \sum_{\sigma'} \eta(\sigma) \eta(\sigma') X^{\sigma' \leftarrow 0}_j X^{-\sigma' \leftarrow d}_i X^{d \leftarrow-\sigma'}_i X^{0 \leftarrow \sigma}_j\\
 \nonumber
 =& -t^2 \sum_{\sigma} \sum_{\sigma'} \eta(\sigma) \eta(\sigma')  X^{-\sigma' \leftarrow -\sigma}_i X^{\sigma' \leftarrow \sigma}_j\\
 =& -t^2 \sum_{\sigma}\left[ X^{-\sigma \leftarrow -\sigma}_i  X^{\sigma \leftarrow \sigma}_j + X^{\sigma \leftarrow -\sigma}_i  X^{-\sigma \leftarrow \sigma}_j \right]
@@ -417,31 +418,69 @@ Defining the projected hopping operator
 We get
 \begin{align}
 \nonumber
-H^{A}_{\mathrm{3-site}} &= -\frac{t^2}{U} \sum_{\langle i,j } \sum_\sigma \left[ c^{\dagger}_{i, \sigma} (1 - \hat{n}_{i, -\sigma}) \hat{n}_{j, -\sigma} c_{k, \sigma} (1 - \hat{n}_{k, -\sigma}) + h.c.\right]\\
+H^{A}_{\mathrm{3-site}} &= -\frac{t^2}{U} \sum_{\langle i,j \rangle} \sum_\sigma \left[ c^{\dagger}_{i, \sigma} (1 - \hat{n}_{i, -\sigma}) \hat{n}_{j, -\sigma} c_{k, \sigma} (1 - \hat{n}_{k, -\sigma}) + h.c.\right]\\
 &=
--\frac{t^2}{U} \sum_{\langle i,j } \sum_\sigma \left[ \tilde{c}^{\dagger}_{i, \sigma} \hat{n}_{j, -\sigma} \tilde{c}_{k, \sigma} + h.c. \right]
+-\frac{t^2}{U} \sum_{\langle i,j \rangle} \sum_\sigma \left[ \tilde{c}^{\dagger}_{i, \sigma} \hat{n}_{j, -\sigma} \tilde{c}_{k, \sigma} + h.c. \right]
 \end{align}
 
 Similarly,
 \begin{align}
-\nonumber
 H^{B}_{\mathrm{3-site}} &= 
--\frac{t^2}{U} \sum_{\langle i,j } \sum_\sigma \left[ \tilde{c}^{\dagger}_{i, \sigma} \tilde{c}^{\dagger}_{j, \sigma} \tilde{c}_{j, -\sigma} \tilde{c}_{k, \sigma} + h.c. \right]
+-\frac{t^2}{U} \sum_{\langle i,j \rangle } \sum_\sigma \left[ \tilde{c}^{\dagger}_{i, \sigma} \tilde{c}^{\dagger}_{j, \sigma} \tilde{c}_{j, -\sigma} \tilde{c}_{k, \sigma} + h.c. \right]
 \end{align}
 
 Thus, up to $ \order{\frac{t}{U}} $, we have successfully separated the bands. This allows us to look at the low energy sub-bands only, without worrying about the high energy spectrum.
 
 Next, if we examine the contributions of the $ \I \comm{S}{H^{0}_{t}} $ term, we will find that after two hops, the system moves from a singly occupied state to a doubly occupied state. However, since these terms are of $ \order{\frac{t^2}{U}} $, we will neglect them. These bands can be separated by adding another transformation, however, higher order bands will still remain mixed. In fact, it is impossible to separate all bands in a finite number of steps.
 
+\section{Gutzwiller variation mean field theory}
+Given a Hamiltonian, we can calculate the ground state energies and  wavefunctions approximately using variational method. Let $ \psi $ be the trial ground state of the Hamiltonian $ H $. Then, the ground state energy is given as
+\begin{align}
+E_{g} = \frac{ \expval{H}{\psi} }{ \ip{\psi} }
+\end{align}
+
+We can write $ \ket{\psi} $ in terms of some parameters and minimize the above expectation in order to obtain the upper-bound of the ground state energy.
+
+The Gutzwiller trial wavefunction is given as
+\begin{align}
+\ket{\psi_g} = \hat{P} \ket{\psi_0}
+\end{align}
+where $ \hat{P} $ is a projection operator and $ \ket{\psi_0} $ is the trial ground state, which can simply be taken as the Slater determinant of the single-particle states, which the condition that there are no nodes in the state.
+
+The form of $ \hat{P} $ is taken as \cite{PhysRevLett.10.159}
+\begin{align}
+\hat{P} = \prod_{i} \hat{P}_i
+\end{align}
+where
+\begin{align}
+\hat{P}_i = y^{n_ {i, \uparrow} }_{i, \uparrow} y^{n_ {i, \downarrow} }_{i, \downarrow} \left[ 1 - \left( 1 - g_i \right) \hat{P}_{i, d} \right]
+\end{align}
+where $ g_i $ is the Gutzwiller factor which parametrizes the projector.
+
+The $ y_i,\sigma $ factors ensure that the charge densities before and after projector remain conserved. These factors can be determined by using
+\begin{align}
+\nonumber
+n_{i, \sigma}
+&=
+n^{0}_{i, \sigma}\\
+\nonumber
+&=
+\frac{ \expval{\hat{n}}{\hat{P}_{i}}_{0} }{ \expval{\hat{P}^{2}_{i}}_0 }
+\end{align}
+
+The subscript 0 is used to denote expectations with respect to $ 
+\ket{\psi_0} $ and the superscript 0 is taken in the non-projected states. We can then take the expectation value with respect to $ \ket{\psi_g} $ and obtain the values of the ground state energies and the ground state wavefunction for the t-J model.
+
+
 \chapter{Solving the Heisenberg model using the t-J model}
-\section{Hesisenberg model as a special case of t-J model}
+\section{Heisenberg model as a special case of t-J model}
 At a large $ U $ limit with $ n = 1 $, the t-J model becomes the Heisenberg model. At half-filling, the system lacks pairs or holes once we neglect double occupations. If we neglect the density-density term, the Hamiltonian for the Heisenberg model is given as
 \begin{align}
 H = \frac{4t^2}{U} \sum_{\langle i,j \rangle} \vec{S_{i}} \cdot \vec{S_{j}}
 \end{align}
 Thus, the Hamiltonian only acts on spin states, like the t-J model Hamiltonian.
 
-\section{Density calculation for a site}
+\section{Density calculation for a site with double occupancy}
 To see whether the t-J model successfully captures the behaviour of this system, let us calculate the density of a doubly occupied site in the large $ U $ limit. We will do this by performing a Schrieffer-Wolff transformation on the ground state $ \ket{\psi} $ of the Hubbard model and transform it to the ground state of the effective Hamiltonian, $ \ket{\tilde{\psi}} = \exp(\I S) \ket{\psi} $.
 
 \begin{align}
@@ -482,14 +521,11 @@ n_d =&
 2z\frac{t^2}{U^2} \expval{\frac{1}{4} - \vec{S_{1}}\cdot\vec{S_{2}}}{\tilde{\psi}}
 \end{align}
 
-where $ z $ is the coordination number of the sites. As expected, the density at each site is proportional to the spin-correlation operator.
-
-Similarly, we can calculate the band energy term for the interaction energy density:
+where $ z $ is the coordination number of the sites. As expected, the density at each site is proportional to the spin-correlation operator, similar to the Heisenberg model.
 \begin{align}
 \frac{1}{L}\expval{H_U}{\psi} = \frac{t^2}{U} \left[1 - 4 \expval{\vec{S_{1}}\cdot\vec{S_{2}}}{\tilde{\psi}} \right]
 \end{align}
-
-For the band energy density,
+Similarly, we can calculate the band energy term for the interaction energy density:
 \begin{align}
 \frac{1}{L}\expval{H_\mathrm{band}}{\psi} = 4\frac{t^2}{U} \left[1 - 4 \expval{\vec{S_{1}}\cdot\vec{S_{2}}}{\tilde{\psi}} \right]
 \end{align}
@@ -498,6 +534,10 @@ Adding these two, we get
 \begin{align}
 \frac{1}{L}\expval{H}{\psi} = -2\frac{t^2}{U}  \expval{\vec{S_{1}}\cdot\vec{S_{2}} - \frac{1}{4}}{\tilde{\psi}}
 \end{align}
+
+\nocite{*}
+\bibliography{tjbib}
+\bibliographystyle{plain}
 
 \end{document}
 
